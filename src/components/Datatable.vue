@@ -1,5 +1,5 @@
 <template>
-    <table class="table table-stripped table-bordered">
+    <table class="table table-striped table-bordered">
         <thead>
         <tr>
             <th :colspan="config.columns.length+1">
@@ -13,8 +13,12 @@
                 </div>
             </th>
         </tr>
-        <tr>
-            <th v-for="column in config.columns" @click="sortDirection(column)" class="clickable">
+        <tr class="table-header">
+            <th
+                    v-for="column in config.columns"
+                    @click="sortDirection(column)"
+                    class="clickable"
+                    :class="{'active-header-column': config.sort.column == column}">
                 {{ column }}
                 <span class="pull-right" v-if="column == config.sort.column">
                         <i class="glyphicon glyphicon-chevron-down" v-if="config.sort.direction == 'desc'"></i>
@@ -31,7 +35,7 @@
         </thead>
         <tbody>
         <tr v-for="row in result">
-            <td v-for="column in config.columns">
+            <td v-for="column in config.columns" :class="{'active-column': config.sort.column == column}">
                 {{ row[column] }}
             </td>
             <td v-if="config.actions" width="15%">
@@ -134,5 +138,17 @@
 
     .clickable {
         cursor: pointer;
+    }
+
+    .table-header {
+        background-color: #e8e8e8;
+    }
+
+    .active-column {
+        background-color: #e7f8e2;
+    }
+
+    .active-header-column {
+        background-color: #c8c8c8;
     }
 </style>
